@@ -2,6 +2,7 @@
 
 交互式中文 **Python FastAPI** 教程：课程 + 测验 + 进度 + 代码示例。
 
+**在线访问（GitHub Pages）：** [https://xiaoqianran.github.io/learning-python-fastapi/](https://xiaoqianran.github.io/learning-python-fastapi/)  
 **仓库：** [https://github.com/xiaoqianran/learning-python-fastapi](https://github.com/xiaoqianran/learning-python-fastapi)
 
 参考姊妹项目：[learning-vue3](https://github.com/xiaoqianran/learning-vue3)
@@ -64,6 +65,16 @@ uvicorn main:app --reload
 
 ---
 
+## 部署（GitHub Pages + Actions）
+
+推送到 `main` 后，工作流 **Deploy to GitHub Pages** 自动构建并发布。
+
+- Pages 源：**GitHub Actions**
+- 站点：https://xiaoqianran.github.io/learning-python-fastapi/
+- 也可在 Actions 页手动 **Run workflow**
+
+---
+
 ## 技术栈
 
 - **界面：** React 19 + Vite + Tailwind CSS v4
@@ -90,6 +101,7 @@ uvicorn main:app --reload
 
 ## 相关链接
 
+- 在线课站：[learning-python-fastapi](https://xiaoqianran.github.io/learning-python-fastapi/)
 - 仓库：[xiaoqianran/learning-python-fastapi](https://github.com/xiaoqianran/learning-python-fastapi)
 - 姊妹项目：[learning-vue3](https://github.com/xiaoqianran/learning-vue3)
 - FastAPI 官方文档：[https://fastapi.tiangolo.com/zh/](https://fastapi.tiangolo.com/zh/)
