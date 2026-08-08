@@ -8,9 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-# dist (committed for reliable GH Pages Actions deploy)
-# dist
+dist
 dist-ssr
+_site
 *.local
 
 # Editor
