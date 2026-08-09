@@ -30,17 +30,69 @@ export const LESSONS: Lesson[] = [
     summary: "高性能、现代、易用的 Python Web 框架，基于标准类型提示。",
     level: "入门",
     track: "基础",
-    minutes: 8,
+    minutes: 12,
     official: "https://fastapi.tiangolo.com/zh/",
     blocks: [
       {
         type: "text",
-        title: "为什么选择 FastAPI",
-        body: "FastAPI 是一个用于构建 API 的现代、快速（高性能）的 web 框架，基于标准 Python 类型提示。\n\n核心优势：\n- 极速：与 NodeJS 和 Go 相当的性能（基于 Starlette + Pydantic）\n- 快速编码：开发速度提升约 200%~300%\n- 更少 bug：减少约 40% 的人为错误\n- 直观：优秀的编辑器支持，自动补全无处不在\n- 基于标准：完全兼容 OpenAPI（Swagger）和 JSON Schema\n- 自动文档：交互式 API 文档开箱即用",
+        title: "概念深讲",
+        body: `FastAPI 是一个用于构建 API 的现代、快速（高性能）的 web 框架，基于标准 Python 类型提示。
+
+核心优势：
+- 极速：与 NodeJS 和 Go 相当的性能（基于 Starlette + Pydantic）
+- 快速编码：开发速度提升约 200%~300%
+- 更少 bug：减少约 40% 的人为错误
+- 直观：优秀的编辑器支持，自动补全无处不在
+- 基于标准：完全兼容 OpenAPI（Swagger）和 JSON Schema
+- 自动文档：交互式 API 文档开箱即用
+
+为什么这一节重要：高性能、现代、易用的 Python Web 框架，基于标准类型提示。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「FastAPI 是什么」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "补充要点 1",
+        body: `运行：uvicorn main:app --reload。然后访问 http://127.0.0.1:8000/docs 查看自动生成的交互式文档。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「FastAPI 是什么」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「intro」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是FastAPI 是什么？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "最简单的 FastAPI 应用",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import FastAPI
 
@@ -55,25 +107,41 @@ def read_item(item_id: int, q: str | None = None):
     return {"item_id": item_id, "q": q}`,
       },
       {
+        type: "code",
+        title: "自检清单（注释版）",
+        lang: "text",
+        code: `// [ ] 能用自己的话解释：FastAPI 是什么
+// [ ] 能默写最小示例
+// [ ] 能说出 2 个踩坑
+// [ ] 能在项目场景里决定用/不用`,
+      },
+      {
         type: "tip",
-        body: "运行：uvicorn main:app --reload。然后访问 http://127.0.0.1:8000/docs 查看自动生成的交互式文档。",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
       },
       {
         type: "quiz",
         questions: [
           {
-            id: "q1",
-            question: "FastAPI 的自动文档默认路径是？",
-            options: ["/docs", "/swagger", "/api-docs", "/redoc"],
-            answer: 0,
-            explanation: "默认 /docs 是 Swagger UI，/redoc 是 ReDoc。",
+            id: "intro-0b4b-1",
+            question: "关于「FastAPI 是什么」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
           },
           {
-            id: "q2",
-            question: "FastAPI 主要依赖哪两个核心库？",
-            options: ["Django + DRF", "Flask + Marshmallow", "Starlette + Pydantic", "Tornado + Cerberus"],
-            answer: 2,
-            explanation: "Starlette 负责 ASGI web 部分，Pydantic 负责数据验证。",
+            id: "intro-0b4b-2",
+            question: "学习「FastAPI 是什么」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "intro-0b4b-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
           },
         ],
       },
@@ -85,17 +153,61 @@ def read_item(item_id: int, q: str | None = None):
     summary: "用类型提示声明路径参数和查询参数，自动验证与转换。",
     level: "入门",
     track: "基础",
-    minutes: 10,
+    minutes: 12,
     official: "https://fastapi.tiangolo.com/zh/tutorial/path-params/",
     blocks: [
       {
         type: "text",
-        title: "路径参数",
-        body: "路径参数用花括号声明，并在函数参数中用相同名字 + 类型注解接收。FastAPI 会自动解析、验证并转换成对应类型。",
+        title: "概念深讲",
+        body: `路径参数用花括号声明，并在函数参数中用相同名字 + 类型注解接收。FastAPI 会自动解析、验证并转换成对应类型。
+
+为什么这一节重要：用类型提示声明路径参数和查询参数，自动验证与转换。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「路径参数与查询参数」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "补充要点 1",
+        body: `函数中未在路径声明的参数会自动成为查询参数。可以设置默认值、可选（None）、必填。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「路径参数与查询参数」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「path-params」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是路径参数与查询参数？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "路径参数示例",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import FastAPI
 
@@ -109,13 +221,8 @@ async def read_user(user_id: int):
 # 访问 /users/foo → 422 Validation Error`,
       },
       {
-        type: "text",
-        title: "查询参数",
-        body: "函数中未在路径声明的参数会自动成为查询参数。可以设置默认值、可选（None）、必填。",
-      },
-      {
         type: "code",
-        title: "查询参数示例",
+        title: "示例代码 2",
         lang: "python",
         code: `from fastapi import FastAPI
 
@@ -128,14 +235,32 @@ async def read_items(skip: int = 0, limit: int = 10, q: str | None = None):
 # /items/?skip=20&limit=5&q=python`,
       },
       {
+        type: "tip",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
         type: "quiz",
         questions: [
           {
-            id: "q1",
-            question: "路径参数 user_id: int 如果传入非数字，会返回什么状态码？",
-            options: ["400", "404", "422", "500"],
-            answer: 2,
-            explanation: "Pydantic 验证失败返回 422 Unprocessable Entity。",
+            id: "path-params-a2b0-1",
+            question: "关于「路径参数与查询参数」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "path-params-a2b0-2",
+            question: "学习「路径参数与查询参数」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "path-params-a2b0-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
           },
         ],
       },
@@ -152,12 +277,61 @@ async def read_items(skip: int = 0, limit: int = 10, q: str | None = None):
     blocks: [
       {
         type: "text",
-        title: "Pydantic 模型",
-        body: "声明一个继承自 BaseModel 的类，把字段和类型写清楚。FastAPI 会用它：\n1. 读取请求体 JSON\n2. 转换为模型实例\n3. 验证数据\n4. 生成 JSON Schema 文档\n5. 在编辑器中提供自动补全",
+        title: "概念深讲",
+        body: `声明一个继承自 BaseModel 的类，把字段和类型写清楚。FastAPI 会用它：
+1. 读取请求体 JSON
+2. 转换为模型实例
+3. 验证数据
+4. 生成 JSON Schema 文档
+5. 在编辑器中提供自动补全
+
+为什么这一节重要：用 Pydantic BaseModel 定义请求体，自动验证、文档、序列化。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「请求体与 Pydantic 模型」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "补充要点 1",
+        body: `Pydantic v2 使用 model_dump() 而不是 dict()。推荐使用 Python 3.10+ 的 | 联合类型语法。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「请求体与 Pydantic 模型」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「request-body」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是请求体与 Pydantic 模型？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "完整示例",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import FastAPI
 from pydantic import BaseModel
@@ -179,23 +353,41 @@ async def create_item(item: Item):
     return item_dict`,
       },
       {
+        type: "code",
+        title: "自检清单（注释版）",
+        lang: "text",
+        code: `// [ ] 能用自己的话解释：请求体与 Pydantic 模型
+// [ ] 能默写最小示例
+// [ ] 能说出 2 个踩坑
+// [ ] 能在项目场景里决定用/不用`,
+      },
+      {
         type: "tip",
-        body: "Pydantic v2 使用 model_dump() 而不是 dict()。推荐使用 Python 3.10+ 的 | 联合类型语法。",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
       },
       {
         type: "quiz",
         questions: [
           {
-            id: "q1",
-            question: "下面哪个是正确的可选字段声明？",
-            options: [
-              "description: str = None",
-              "description: Optional[str]",
-              "description: str | None = None",
-              "以上都可以（推荐最后一种）",
-            ],
-            answer: 3,
-            explanation: "三种都能工作，但 str | None = None 是现代推荐写法。",
+            id: "request-body-94e2-1",
+            question: "关于「请求体与 Pydantic 模型」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "request-body-94e2-2",
+            question: "学习「请求体与 Pydantic 模型」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "request-body-94e2-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
           },
         ],
       },
@@ -207,16 +399,58 @@ async def create_item(item: Item):
     summary: "用 response_model 控制返回数据结构，设置状态码。",
     level: "入门",
     track: "数据验证",
-    minutes: 10,
+    minutes: 12,
     blocks: [
       {
         type: "text",
-        title: "response_model 的作用",
-        body: "即使函数返回了更多字段，response_model 会过滤只输出声明的字段。还可以用于：\n- 文档中显示正确的响应 Schema\n- 转换输出数据\n- 添加响应示例",
+        title: "概念深讲",
+        body: `即使函数返回了更多字段，response_model 会过滤只输出声明的字段。还可以用于：
+- 文档中显示正确的响应 Schema
+- 转换输出数据
+- 添加响应示例
+
+为什么这一节重要：用 response_model 控制返回数据结构，设置状态码。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「响应模型与状态码」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「响应模型与状态码」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「response-model」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是响应模型与状态码？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "响应模型示例",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import FastAPI, status
 from pydantic import BaseModel
@@ -236,6 +470,45 @@ class ItemOut(BaseModel):
 async def create_item(item: Item):
     return item  # 即使有 description，响应也不会包含它`,
       },
+      {
+        type: "code",
+        title: "自检清单（注释版）",
+        lang: "text",
+        code: `// [ ] 能用自己的话解释：响应模型与状态码
+// [ ] 能默写最小示例
+// [ ] 能说出 2 个踩坑
+// [ ] 能在项目场景里决定用/不用`,
+      },
+      {
+        type: "tip",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
+        type: "quiz",
+        questions: [
+          {
+            id: "response-model-e666-1",
+            question: "关于「响应模型与状态码」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "response-model-e666-2",
+            question: "学习「响应模型与状态码」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "response-model-e666-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
+          },
+        ],
+      },
     ],
   },
   {
@@ -249,12 +522,57 @@ async def create_item(item: Item):
     blocks: [
       {
         type: "text",
-        title: "什么是依赖注入",
-        body: "依赖是一个函数（或可调用对象），FastAPI 会在处理请求前执行它，把返回值注入到路径操作函数的参数中。\n\n常见用途：\n- 共享数据库连接\n- 强制用户认证\n- 共享业务逻辑\n- 限流、日志等横切关注点",
+        title: "概念深讲",
+        body: `依赖是一个函数（或可调用对象），FastAPI 会在处理请求前执行它，把返回值注入到路径操作函数的参数中。
+
+常见用途：
+- 共享数据库连接
+- 强制用户认证
+- 共享业务逻辑
+- 限流、日志等横切关注点
+
+为什么这一节重要：FastAPI 最强大的特性之一：可复用、可组合的依赖。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「依赖注入系统」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「依赖注入系统」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「dependency-injection」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是依赖注入系统？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "简单依赖",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import Depends, FastAPI
 
@@ -273,7 +591,7 @@ async def read_users(commons: dict = Depends(common_parameters)):
       },
       {
         type: "code",
-        title: "类作为依赖 + 认证示例",
+        title: "示例代码 2",
         lang: "python",
         code: `from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -295,18 +613,32 @@ async def read_users_me(current_user: dict = Depends(get_current_user)):
     return current_user`,
       },
       {
+        type: "tip",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
         type: "quiz",
         questions: [
           {
-            id: "q1",
-            question: "Depends 的主要作用是？",
-            options: [
-              "声明路径参数",
-              "把依赖的返回值注入到函数参数",
-              "生成 OpenAPI 文档",
-              "处理 CORS",
-            ],
+            id: "dependency-injection-c36a-1",
+            question: "关于「依赖注入系统」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
             answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "dependency-injection-c36a-2",
+            question: "学习「依赖注入系统」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "dependency-injection-c36a-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
           },
         ],
       },
@@ -318,16 +650,55 @@ async def read_users_me(current_user: dict = Depends(get_current_user)):
     summary: "用 APIRouter 把路由拆分到多个模块，保持代码整洁。",
     level: "进阶",
     track: "工程化",
-    minutes: 10,
+    minutes: 12,
     blocks: [
       {
         type: "text",
-        title: "为什么用 APIRouter",
-        body: "当应用变大时，把所有路径写在一个文件里会很难维护。APIRouter 允许你把相关端点分组，并统一添加前缀、标签、依赖。",
+        title: "概念深讲",
+        body: `当应用变大时，把所有路径写在一个文件里会很难维护。APIRouter 允许你把相关端点分组，并统一添加前缀、标签、依赖。
+
+为什么这一节重要：用 APIRouter 把路由拆分到多个模块，保持代码整洁。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「APIRouter 组织大型项目」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「APIRouter 组织大型项目」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「router」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是APIRouter 组织大型项目？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "routers/items.py",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import APIRouter, Depends
 from pydantic import BaseModel
@@ -356,7 +727,7 @@ async def read_item(item_id: int):
       },
       {
         type: "code",
-        title: "main.py 挂载",
+        title: "示例代码 2",
         lang: "python",
         code: `from fastapi import FastAPI
 from routers import items
@@ -366,6 +737,36 @@ app.include_router(items.router)
 
 # 也可以加全局前缀
 # app.include_router(items.router, prefix="/api/v1")`,
+      },
+      {
+        type: "tip",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
+        type: "quiz",
+        questions: [
+          {
+            id: "router-f339-1",
+            question: "关于「APIRouter 组织大型项目」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "router-f339-2",
+            question: "学习「APIRouter 组织大型项目」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "router-f339-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
+          },
+        ],
       },
     ],
   },
@@ -379,12 +780,61 @@ app.include_router(items.router)
     blocks: [
       {
         type: "text",
-        title: "async def vs def",
-        body: "FastAPI 对两种路径操作函数都支持：\n\n- async def：适合 I/O 密集型（数据库、HTTP 请求、文件）。FastAPI 会在事件循环中运行。\n- def：适合 CPU 密集型或阻塞库。FastAPI 会放到线程池中运行，避免阻塞事件循环。\n\n规则：如果里面用了 await，就必须用 async def；如果调用的是同步阻塞代码，用普通 def。",
+        title: "概念深讲",
+        body: `FastAPI 对两种路径操作函数都支持：
+
+- async def：适合 I/O 密集型（数据库、HTTP 请求、文件）。FastAPI 会在事件循环中运行。
+- def：适合 CPU 密集型或阻塞库。FastAPI 会放到线程池中运行，避免阻塞事件循环。
+
+规则：如果里面用了 await，就必须用 async def；如果调用的是同步阻塞代码，用普通 def。
+
+为什么这一节重要：正确使用 async/await，以及何时该用 def。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「异步与并发」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "补充要点 1",
+        body: `不要在 async def 里调用同步阻塞函数（如 time.sleep、同步 requests），会阻塞整个服务。用 await asyncio.sleep 或 httpx 等异步库。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「异步与并发」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「async」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是异步与并发？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "异步示例",
+        title: "对应源码",
         lang: "python",
         code: `import httpx
 from fastapi import FastAPI
@@ -404,8 +854,43 @@ def heavy_computation():
     return {"result": total}`,
       },
       {
+        type: "code",
+        title: "自检清单（注释版）",
+        lang: "text",
+        code: `// [ ] 能用自己的话解释：异步与并发
+// [ ] 能默写最小示例
+// [ ] 能说出 2 个踩坑
+// [ ] 能在项目场景里决定用/不用`,
+      },
+      {
         type: "tip",
-        body: "不要在 async def 里调用同步阻塞函数（如 time.sleep、同步 requests），会阻塞整个服务。用 await asyncio.sleep 或 httpx 等异步库。",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
+        type: "quiz",
+        questions: [
+          {
+            id: "async-0df9-1",
+            question: "关于「异步与并发」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "async-0df9-2",
+            question: "学习「异步与并发」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "async-0df9-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
+          },
+        ],
       },
     ],
   },
@@ -415,11 +900,55 @@ def heavy_computation():
     summary: "添加 CORS、自定义中间件处理请求/响应。",
     level: "进阶",
     track: "工程化",
-    minutes: 10,
+    minutes: 12,
     blocks: [
       {
+        type: "text",
+        title: "概念深讲",
+        body: `添加 CORS、自定义中间件处理请求/响应。
+
+为什么这一节重要：添加 CORS、自定义中间件处理请求/响应。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「中间件与 CORS」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「中间件与 CORS」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「middleware-cors」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是中间件与 CORS？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
+      },
+      {
         type: "code",
-        title: "CORS 中间件（最常用）",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -436,7 +965,7 @@ app.add_middleware(
       },
       {
         type: "code",
-        title: "自定义中间件",
+        title: "示例代码 2",
         lang: "python",
         code: `from fastapi import FastAPI, Request
 import time
@@ -451,6 +980,36 @@ async def add_process_time_header(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
     return response`,
       },
+      {
+        type: "tip",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
+        type: "quiz",
+        questions: [
+          {
+            id: "middleware-cors-9975-1",
+            question: "关于「中间件与 CORS」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "middleware-cors-9975-2",
+            question: "学习「中间件与 CORS」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "middleware-cors-9975-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
+          },
+        ],
+      },
     ],
   },
   {
@@ -462,8 +1021,52 @@ async def add_process_time_header(request: Request, call_next):
     minutes: 12,
     blocks: [
       {
+        type: "text",
+        title: "概念深讲",
+        body: `TestClient 基于 httpx，支持同步写法。对于需要真实 ASGI 生命周期的场景，可用 httpx.AsyncClient + ASGITransport。
+
+为什么这一节重要：使用 TestClient / httpx 写单元测试与集成测试。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「测试 FastAPI 应用」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「测试 FastAPI 应用」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「testing」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是测试 FastAPI 应用？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
+      },
+      {
         type: "code",
-        title: "使用 TestClient",
+        title: "对应源码",
         lang: "python",
         code: `from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -482,8 +1085,43 @@ def test_read_main():
     assert response.json() == {"msg": "Hello World"}`,
       },
       {
+        type: "code",
+        title: "自检清单（注释版）",
+        lang: "text",
+        code: `// [ ] 能用自己的话解释：测试 FastAPI 应用
+// [ ] 能默写最小示例
+// [ ] 能说出 2 个踩坑
+// [ ] 能在项目场景里决定用/不用`,
+      },
+      {
         type: "tip",
-        body: "TestClient 基于 httpx，支持同步写法。对于需要真实 ASGI 生命周期的场景，可用 httpx.AsyncClient + ASGITransport。",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
+        type: "quiz",
+        questions: [
+          {
+            id: "testing-ae2b-1",
+            question: "关于「测试 FastAPI 应用」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "testing-ae2b-2",
+            question: "学习「测试 FastAPI 应用」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "testing-ae2b-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
+          },
+        ],
       },
     ],
   },
@@ -497,13 +1135,60 @@ def test_read_main():
     blocks: [
       {
         type: "text",
-        title: "推荐生产组合",
-        body: "Uvicorn 是 ASGI 服务器。生产环境常用 Gunicorn 作为进程管理器 + UvicornWorker。\n\n命令示例：\ngunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000",
+        title: "概念深讲",
+        body: `Uvicorn 是 ASGI 服务器。生产环境常用 Gunicorn 作为进程管理器 + UvicornWorker。
+
+命令示例：
+gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+
+为什么这一节重要：Uvicorn + Gunicorn、Docker、环境变量。不只是名词，而是后续所有实践的前提。学习时请同时抓住三件事：① 它解决什么问题；② 核心机制/API 是什么；③ 什么情况下不该用、常见坑是什么。`,
+      },
+      {
+        type: "text",
+        title: "机制与关键点",
+        body: `围绕「生产部署入门」，建议你用下面清单自检是否真懂：
+· 输入/前置条件是什么？
+· 输出/副作用是什么？
+· 与相邻概念如何区分？（容易混淆的一对一对比）
+· 复杂度或性能上的直觉（是否 O(n)、是否阻塞、是否有状态）
+· 在真实项目里通常放在哪一层（入口、中间件、数据层、UI、运维）？
+
+把每个点用自己的话写进笔记；能讲给别人听，才算过关。`,
+      },
+      {
+        type: "text",
+        title: "补充要点 1",
+        body: `永远不要在生产使用 --reload。用环境变量管理密钥，用 HTTPS（反向代理如 Caddy / Nginx / Traefik）。`,
+      },
+      {
+        type: "text",
+        title: "实践步骤",
+        body: `1. 只读官方/权威文档里与「生产部署入门」直接相关的一小节，不要发散。
+2. 在本机或本站 Demo 里最小复现：只验证一个行为。
+3. 故意制造一个错误（错参数、错顺序、错环境），观察报错信息。
+4. 改对后再总结：「正确做法 / 错误做法 / 如何排查」三行笔记。
+5. 做本节测验；错题收入错题本，隔天再测一次。`,
+      },
+      {
+        type: "text",
+        title: "踩坑与排障",
+        body: `· 文档示例能跑、自己环境不能：先对齐版本与配置，再怀疑代码。
+· 「好像懂了」但默写不出来：回去做最小复现，而不是再看一遍视频。
+· 多个概念一起崩：二分法缩小范围（注释一半配置/代码）。
+· 与「deploy」相关的问题，优先查官方 FAQ 与 issue 里的 breaking change。
+· 生产环境多一项：可观测性（日志/指标）和回滚策略。`,
+      },
+      {
+        type: "text",
+        title: "面试 / 复盘一问",
+        body: `请用 90 秒回答：什么是生产部署入门？它解决什么问题？举一个你会在项目里使用（或拒绝使用）的场景，并说明取舍。
+
+加分项：对比一个替代方案，并说出性能、复杂度或可维护性上的差异。`,
       },
       {
         type: "code",
-        title: "简单 Dockerfile",
-        lang: "dockerfile",
+        title: "对应源码",
+        lang: "python",
         code: `FROM python:3.12-slim
 
 WORKDIR /app
@@ -514,8 +1199,43 @@ COPY . .
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]`,
       },
       {
+        type: "code",
+        title: "自检清单（注释版）",
+        lang: "text",
+        code: `// [ ] 能用自己的话解释：生产部署入门
+// [ ] 能默写最小示例
+// [ ] 能说出 2 个踩坑
+// [ ] 能在项目场景里决定用/不用`,
+      },
+      {
         type: "tip",
-        body: "永远不要在生产使用 --reload。用环境变量管理密钥，用 HTTPS（反向代理如 Caddy / Nginx / Traefik）。",
+        body: `先求「能复现 + 能讲清」，再求「背全 API」。本课 Demo 与测验就是你的验收标准。`,
+      },
+      {
+        type: "quiz",
+        questions: [
+          {
+            id: "deploy-078f-1",
+            question: "关于「生产部署入门」，最准确的理解是？",
+            options: ["只需要记住名词即可", "要同时理解问题、机制、适用边界与常见坑", "与实践无关", "只能在考试中使用"],
+            answer: 1,
+            explanation: "概念 + 机制 + 边界 + 排障，才是可迁移的掌握。",
+          },
+          {
+            id: "deploy-078f-2",
+            question: "学习「生产部署入门」时，优先行动是？",
+            options: ["一次看完所有周边主题", "最小复现一个行为，再扩展", "只收藏文档不动手", "跳过报错信息"],
+            answer: 1,
+            explanation: "最小复现建立反馈回路。",
+          },
+          {
+            id: "deploy-078f-3",
+            question: "遇到「示例能跑、自己环境不能」时，你应先？",
+            options: ["重写整个项目", "对齐版本/配置并阅读完整报错", "忽略错误继续下一步", "删除全部依赖"],
+            answer: 1,
+            explanation: "环境与版本是第一怀疑对象。",
+          },
+        ],
       },
     ],
   },
